@@ -4,7 +4,6 @@ import com.xiaosantianqi.app.R;
 import com.xiaosantianqi.app.util.HttpCallbackListener;
 import com.xiaosantianqi.app.util.HttpUtil;
 import com.xiaosantianqi.app.util.Utility;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -22,51 +21,36 @@ import android.widget.TextView;
 public class WeatherActivity extends Activity implements OnClickListener {
 
 	private LinearLayout weatherInfoLayout;
-	/**
-	 * 用于显示城市名 第一行代码——Android 514
-	 */
 	private TextView cityNameText;
-	/**
-	 * 用于显示发布时间
-	 */
 	private TextView publishText;
-	/**
-	 * 用于显示天气描述信息
-	 */
-	private TextView weatherDespText;
-	/**
-	 * 用于显示气温1
-	 */
-	private TextView temp1Text;
-	/**
-	 * 用于显示气温2
-	 */
-	private TextView temp2Text;
-	/**
-	 * 用于显示当前日期
-	 */
-	private TextView currentDateText;
-	/**
-	 * 切换城市按钮
-	 */
 	private Button switchCity;
-	/**
-	 * 更新天气按钮
-	 */
 	private Button refreshWeather;
+	private TextView wind;
+	private TextView temp;
+	private TextView temp11;
+	private TextView temp12;
+	private TextView des1;
+
+	private TextView temp21;
+	private TextView temp22;
+	private TextView des2;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.weather_layout);
+		setContentView(R.layout.weather_layout1);
 		// 初始化各控件
-		weatherInfoLayout = (LinearLayout) findViewById(R.id.weather_info_layout);
+		weatherInfoLayout = (LinearLayout) findViewById(R.id.linearLayout);
+		wind = (TextView) findViewById(R.id.wind);
+		temp = (TextView) findViewById(R.id.temp);
+		temp11 = (TextView) findViewById(R.id.temp11);
+		temp12 = (TextView) findViewById(R.id.temp12);
+		des1 = (TextView) findViewById(R.id.des1);
+		temp21 = (TextView) findViewById(R.id.temp21);
+		temp22 = (TextView) findViewById(R.id.temp22);
+		des2 = (TextView) findViewById(R.id.des2);
 		cityNameText = (TextView) findViewById(R.id.city_name);
 		publishText = (TextView) findViewById(R.id.publish_text);
-		weatherDespText = (TextView) findViewById(R.id.weather_desp);
-		temp1Text = (TextView) findViewById(R.id.temp1);
-		temp2Text = (TextView) findViewById(R.id.temp2);
-		currentDateText = (TextView) findViewById(R.id.current_date);
 		switchCity = (Button) findViewById(R.id.switch_city);
 		refreshWeather = (Button) findViewById(R.id.refresh_weather);
 		String countryCode = getIntent().getStringExtra("country_code");
@@ -96,16 +80,17 @@ public class WeatherActivity extends Activity implements OnClickListener {
 			publishText.setText("同步中...");
 			SharedPreferences prefs = PreferenceManager
 					.getDefaultSharedPreferences(this);
-			String weatherCode = prefs.getString("weather_code", "");
+			String weatherCode = prefs.getString("id", "");
 			if (!TextUtils.isEmpty(weatherCode)) {
-				queryWeatherInfo(weatherCode);
+				String address = "https://api.heweather.com/x3/weather?cityid="
+						+ weatherCode + "&key=96193962513d4cf1b153921213446f9f";
+				queryFromServer(address, "weatherCode");
 			}
 			break;
 
 		default:
 			break;
 		}
-
 	}
 
 	/**
@@ -121,8 +106,9 @@ public class WeatherActivity extends Activity implements OnClickListener {
 	 * 查询天气代号所对应的天气。
 	 */
 	private void queryWeatherInfo(String weatherCode) {
-		String address = "http://www.weather.com.cn/data/cityinfo/"
-				+ weatherCode + ".html";
+		String address = "https://api.heweather.com/x3/weather?cityid=CN"
+				+ weatherCode + "&key=96193962513d4cf1b153921213446f9f";
+		Log.d("address", address);
 		queryFromServer(address, "weatherCode");
 	}
 
@@ -131,6 +117,7 @@ public class WeatherActivity extends Activity implements OnClickListener {
 	 */
 	private void queryFromServer(final String address, final String type) {
 		HttpUtil.sendHttpRequest(address, new HttpCallbackListener() {
+
 			public void onFinish(final String response) {
 				if ("countyCode".equals(type)) {
 					if (!TextUtils.isEmpty(response)) {
@@ -138,6 +125,7 @@ public class WeatherActivity extends Activity implements OnClickListener {
 						String[] array = response.split("\\|");
 						if (array != null && array.length == 2) {
 							String weatherCode = array[1];
+							Log.d("weatherCode", weatherCode);
 							queryWeatherInfo(weatherCode);
 						}
 					}
@@ -170,13 +158,18 @@ public class WeatherActivity extends Activity implements OnClickListener {
 	private void showWeather() {
 		SharedPreferences prefs = PreferenceManager
 				.getDefaultSharedPreferences(this);
-		cityNameText.setText(prefs.getString("city_name", ""));
-		temp1Text.setText(prefs.getString("temp1", ""));
-		temp2Text.setText(prefs.getString("temp2", ""));
-		weatherDespText.setText(prefs.getString("weather_desp", ""));
-		publishText.setText("今天" + prefs.getString("publish_time", "") + "发布");
-		currentDateText.setText(prefs.getString("current_date", ""));
-		weatherInfoLayout.setVisibility(View.VISIBLE);
+		cityNameText.setText(prefs.getString("cityName", ""));
 		cityNameText.setVisibility(View.VISIBLE);
+		publishText.setText("更新时间:\n" + prefs.getString("updateTime", ""));
+		wind.setText(prefs.getString("wind", ""));
+		temp.setText(prefs.getString("tmp", "") + "℃");
+		temp11.setText(prefs.getString("temp11", "") + "℃");
+		temp12.setText(prefs.getString("temp12", "") + "℃");
+		des1.setText(prefs.getString("des1", ""));
+		temp21.setText(prefs.getString("temp21", "") + "℃");
+		temp22.setText(prefs.getString("temp22", "") + "℃");
+		des2.setText(prefs.getString("des2", ""));
+		weatherInfoLayout.setVisibility(View.VISIBLE);
+
 	}
 }
