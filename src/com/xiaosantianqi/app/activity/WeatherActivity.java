@@ -23,6 +23,7 @@ public class WeatherActivity extends Activity implements OnClickListener {
 	private LinearLayout weatherInfoLayout;
 	private TextView cityNameText;
 	private TextView publishText;
+	private Button moreInformation;
 	private Button switchCity;
 	private Button refreshWeather;
 	private TextView wind;
@@ -52,12 +53,14 @@ public class WeatherActivity extends Activity implements OnClickListener {
 		cityNameText = (TextView) findViewById(R.id.city_name);
 		publishText = (TextView) findViewById(R.id.publish_text);
 		switchCity = (Button) findViewById(R.id.switch_city);
+		moreInformation = (Button) findViewById(R.id.moreinformation);
 		refreshWeather = (Button) findViewById(R.id.refresh_weather);
 		String countryCode = getIntent().getStringExtra("country_code");
 		if (!TextUtils.isEmpty(countryCode)) {
 			// 有县级代号时就去查询天气
 			publishText.setText("同步中...");
 			weatherInfoLayout.setVisibility(View.INVISIBLE);
+			moreInformation.setVisibility(View.INVISIBLE);
 			cityNameText.setVisibility(View.INVISIBLE);
 			queryWeatherCode(countryCode);
 		} else {
@@ -66,6 +69,7 @@ public class WeatherActivity extends Activity implements OnClickListener {
 		}
 		switchCity.setOnClickListener(this);
 		refreshWeather.setOnClickListener(this);
+		moreInformation.setOnClickListener(this);
 	}
 
 	public void onClick(View v) {
@@ -87,7 +91,10 @@ public class WeatherActivity extends Activity implements OnClickListener {
 				queryFromServer(address, "weatherCode");
 			}
 			break;
-
+		case R.id.moreinformation:
+			Intent intentInformation = new Intent(WeatherActivity.this,
+					BasicActivity.class);
+			startActivity(intentInformation);
 		default:
 			break;
 		}
@@ -170,6 +177,7 @@ public class WeatherActivity extends Activity implements OnClickListener {
 		temp22.setText(prefs.getString("temp22", "") + "℃");
 		des2.setText(prefs.getString("des2", ""));
 		weatherInfoLayout.setVisibility(View.VISIBLE);
-
+		moreInformation.setVisibility(View.VISIBLE);
 	}
+
 }

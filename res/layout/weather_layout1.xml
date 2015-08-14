@@ -14,7 +14,7 @@
             android:layout_height="30dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
-            android:background="@drawable/zhuye" />
+            android:background="@drawable/blue" />
 
         <TextView
             android:id="@+id/city_name"
@@ -38,7 +38,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="#27A5F9" >
+        android:background="@drawable/beach" >
 
         <TextView
             android:id="@+id/publish_text"
@@ -56,9 +56,19 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="20dp"
             android:textColor="#FFF"
             android:textSize="25sp" />
+
+        <Button
+            android:id="@+id/moreinformation"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="60dp"
+            android:background="@drawable/information" />
 
         <TextView
             android:id="@+id/temp"

@@ -87,6 +87,15 @@ public class Utility {
 			JSONArray array = jsonObject
 					.getJSONArray("HeWeather data service 3.0");
 			JSONObject jsonObjectData = array.getJSONObject(0);
+			JSONObject jsonObjectAqi = jsonObjectData.getJSONObject("aqi");
+			JSONObject jsonObjectCity = jsonObjectAqi.getJSONObject("city");
+			String co = jsonObjectCity.getString("co");
+			String no2 = jsonObjectCity.getString("no2");
+			String o3 = jsonObjectCity.getString("o3");
+			String pm10 = jsonObjectCity.getString("pm10");
+			String pm25 = jsonObjectCity.getString("pm25");
+			String qlty = jsonObjectCity.getString("qlty");
+			String so2 = jsonObjectCity.getString("so2");
 			JSONObject jsonObjectBasic = jsonObjectData.getJSONObject("basic");
 			String cityName = jsonObjectBasic.getString("city");
 			String id = jsonObjectBasic.getString("id");
@@ -127,6 +136,13 @@ public class Utility {
 			editor.putString("temp21", temp21);
 			editor.putString("temp22", temp22);
 			editor.putString("des2", des2);
+			editor.putString("co", co);
+			editor.putString("no2", no2);
+			editor.putString("o3", o3);
+			editor.putString("pm10", pm10);
+			editor.putString("pm25", pm25);
+			editor.putString("qlty", qlty);
+			editor.putString("so2", so2);
 			editor.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
