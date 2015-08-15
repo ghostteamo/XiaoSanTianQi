@@ -10,7 +10,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -103,10 +102,10 @@ public class WeatherActivity extends Activity implements OnClickListener {
 	/**
 	 * 查询县级代号所对应的天气代号。
 	 */
-	private void queryWeatherCode(String countyCode) {
+	private void queryWeatherCode(String countryCode) {
 		String address = "http://www.weather.com.cn/data/list3/city"
-				+ countyCode + ".xml";
-		queryFromServer(address, "countyCode");
+				+ countryCode + ".xml";
+		queryFromServer(address, "countryCode");
 	}
 
 	/**
@@ -115,7 +114,6 @@ public class WeatherActivity extends Activity implements OnClickListener {
 	private void queryWeatherInfo(String weatherCode) {
 		String address = "https://api.heweather.com/x3/weather?cityid=CN"
 				+ weatherCode + "&key=96193962513d4cf1b153921213446f9f";
-		Log.d("address", address);
 		queryFromServer(address, "weatherCode");
 	}
 
@@ -126,13 +124,12 @@ public class WeatherActivity extends Activity implements OnClickListener {
 		HttpUtil.sendHttpRequest(address, new HttpCallbackListener() {
 
 			public void onFinish(final String response) {
-				if ("countyCode".equals(type)) {
+				if ("countryCode".equals(type)) {
 					if (!TextUtils.isEmpty(response)) {
 						// 从服务器返回的数据中解析出天气代号
 						String[] array = response.split("\\|");
 						if (array != null && array.length == 2) {
 							String weatherCode = array[1];
-							Log.d("weatherCode", weatherCode);
 							queryWeatherInfo(weatherCode);
 						}
 					}

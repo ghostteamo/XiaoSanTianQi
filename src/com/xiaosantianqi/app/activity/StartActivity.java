@@ -28,12 +28,12 @@ public class StartActivity extends Activity {
 					TIME = 1;
 				}
 				timer.cancel();
+				TIME = 0;
 				finish();
 			}
 		};
 
 		timer = new Timer(true);
 		timer.schedule(task, 2500, 1000);
-
 	}
 }
