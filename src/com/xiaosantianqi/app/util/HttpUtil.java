@@ -6,8 +6,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import android.util.Log;
-
 public class HttpUtil {
 	public static void sendHttpRequest(final String address,
 			final HttpCallbackListener listener) {
@@ -22,7 +20,6 @@ public class HttpUtil {
 					connection.setConnectTimeout(8000);
 					connection.setReadTimeout(8000);
 					InputStream in = connection.getInputStream();
-					Log.d("URL", url.toString());
 					BufferedReader reader = new BufferedReader(
 							new InputStreamReader(in));
 					StringBuilder response = new StringBuilder();
@@ -35,8 +32,6 @@ public class HttpUtil {
 						listener.onFinish(response.toString());
 					}
 				} catch (Exception e) {
-					Log.d("异常信息", e.getMessage());
-					Log.d("异常", "发生异常");
 					if (listener != null) {
 						listener.onError(e);
 					}
