@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -85,7 +86,7 @@ public class WeatherActivity extends Activity implements OnClickListener {
 					.getDefaultSharedPreferences(this);
 			String weatherCode = prefs.getString("id", "");
 			if (!TextUtils.isEmpty(weatherCode)) {
-				String address = "https://api.heweather.com/x3/weather?cityid="
+				String address = "http://api.heweather.com/x3/weather?cityid="
 						+ weatherCode + "&key=96193962513d4cf1b153921213446f9f";
 				queryFromServer(address, "weatherCode");
 			}
@@ -112,8 +113,9 @@ public class WeatherActivity extends Activity implements OnClickListener {
 	 * 查询天气代号所对应的天气。
 	 */
 	private void queryWeatherInfo(String weatherCode) {
-		String address = "https://api.heweather.com/x3/weather?cityid=CN"
+		String address = "http://api.heweather.com/x3/weather?cityid=CN"
 				+ weatherCode + "&key=96193962513d4cf1b153921213446f9f";
+		Log.d("天气地址", address);
 		queryFromServer(address, "weatherCode");
 	}
 
@@ -138,6 +140,7 @@ public class WeatherActivity extends Activity implements OnClickListener {
 					// 处理服务器返回的天气信息
 					Utility.handleWeatherResponse(WeatherActivity.this,
 							response);
+					Log.d("返回的天气信息", response);
 					runOnUiThread(new Runnable() {
 						public void run() {
 							showWeather();

@@ -17,10 +17,12 @@ public class HttpUtil {
 				try {
 					URL url = new URL(address);
 					connection = (HttpURLConnection) url.openConnection();
+
 					connection.setRequestMethod("GET");
 					connection.setConnectTimeout(8000);
 					connection.setReadTimeout(8000);
 					InputStream in = connection.getInputStream();
+					Log.d("URL", url.toString());
 					BufferedReader reader = new BufferedReader(
 							new InputStreamReader(in));
 					StringBuilder response = new StringBuilder();
@@ -28,11 +30,13 @@ public class HttpUtil {
 					while ((line = reader.readLine()) != null) {
 						response.append(line);
 					}
-					Log.d("response", response.toString());
+
 					if (listener != null) {
 						listener.onFinish(response.toString());
 					}
 				} catch (Exception e) {
+					Log.d("异常信息", e.getMessage());
+					Log.d("异常", "发生异常");
 					if (listener != null) {
 						listener.onError(e);
 					}
