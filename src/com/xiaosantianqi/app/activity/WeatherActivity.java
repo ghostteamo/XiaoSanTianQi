@@ -11,7 +11,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -108,7 +107,6 @@ public class WeatherActivity extends Activity implements OnClickListener {
 		String address = "http://www.weather.com.cn/data/list3/city"
 				+ countryCode + ".xml";
 		queryFromServer(address, "countryCode");
-		Log.d("countryCode", countryCode);
 	}
 
 	/**
@@ -118,7 +116,7 @@ public class WeatherActivity extends Activity implements OnClickListener {
 		String address = "http://api.heweather.com/x3/weather?cityid=CN"
 				+ weatherCode + "&key=96193962513d4cf1b153921213446f9f";
 		queryFromServer(address, "weatherCode");
-		Log.d("weatherCode", weatherCode);
+
 	}
 
 	/**

@@ -13,7 +13,6 @@ import android.content.SharedPreferences;
 import android.os.IBinder;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 public class AutoUpdateService extends Service {
 
@@ -25,7 +24,6 @@ public class AutoUpdateService extends Service {
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		new Thread(new Runnable() {
 			public void run() {
-				Log.d("服务", "自动更新");
 				updateWeather();
 			}
 
