@@ -30,6 +30,12 @@
         </activity>
         <activity android:name="com.xiaosantianqi.app.activity.BasicActivity" >
         </activity>
+
+        <service android:name="com.xiaosantianqi.app.service.AutoUpdateService" >
+        </service>
+
+        <receiver android:name="com.xiaosantianqi.app.receiver.AutoUpdateReceiver" >
+        </receiver>
     </application>
 
 </manifest>

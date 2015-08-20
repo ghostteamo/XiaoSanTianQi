@@ -82,6 +82,7 @@ public class Utility {
 	 */
 	public static void handleWeatherResponse(Context context, String response) {
 		try {
+
 			JSONObject jsonObject = new JSONObject(response);
 			JSONArray array = jsonObject
 					.getJSONArray("HeWeather data service 3.0");
